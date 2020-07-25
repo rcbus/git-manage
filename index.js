@@ -33,14 +33,18 @@ fs.access('./.env', fs.constants.F_OK, (error) => {
         fs.access(process.env.WORKSPACE_PATH, fs.constants.F_OK, (error) => {
             if(error){
                 f.question(['Informe um caminho válido do seu workspace!','Caminho informado: ' + process.env.WORKSPACE_PATH,'(Ex.: /home/user/documents/www/):'],(answer) => {
-                    const data = new Uint8Array(Buffer.from('WORKSPACE_PATH=' + answer));
-                    fs.writeFile('./.env', data, (error) => {
-                        if(error){
-                            f.banner('Houve uma falha: ' + error + '!')
-                        }else{
-                            f.banner(['Caminho salvo com sucesso!','Execute "node index" novamente.'])
-                            s.exit(1)
-                        }
+                    content = 'WORKSPACE_PATH=' + answer + '\n'
+                    f.question(['Informe o seu nome:'],(answer) => {
+                        content = content + 'USER_NAME=' + f.strlower(f.clearString(answer,true,true)) + '\n'
+                        const data = new Uint8Array(Buffer.from(content));
+                        fs.writeFile('./.env', data, (error) => {
+                            if(error){
+                                f.banner('Houve uma falha: ' + error + '!')
+                            }else{
+                                f.banner(['Workspace salvo com sucesso!','Execute "node index" novamente.'])
+                                s.exit(1)
+                            }
+                        });
                     });
                 })
             }else{

@@ -329,6 +329,7 @@ module.exports = {
                 '2 - VERIFICAR O STATUS',
                 '3 - EXECUTAR PUSH (ENVIO PARA GITHUB) COMPLETO',
                 '4 - EXECUTAR PULL (BAIXAR DO GITHUB) COMPLETO',
+                '5 - ABRIR PROJETO NO VSCODE',
                 '<br>'
             ],(answer) => {
                 if(answer=='1'){
@@ -339,6 +340,11 @@ module.exports = {
                     this.pushFull(projetoSelected)
                 }else if(answer=='4'){
                     this.pullFull(projetoSelected)
+                }else if(answer=='5'){
+                    s.cd(process.env.WORKSPACE_PATH + projetoSelected)
+                    s.exec('code .')
+                    const projetos = require('./projetos')
+                    projetos.exec(projetoSelected)
                 }else{
                     const projetos = require('./projetos')
                     projetos.exec()
