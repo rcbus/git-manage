@@ -26,7 +26,7 @@ Para instalar o sistema basta clonar o mesmo:
 git clone https://github.com/rcbus/git-manage.git
 ```
 
-Depois disso, acesso o diretório do sistema:
+Depois disso, acesse o diretório do sistema:
 
 ```
 cd git-manage
@@ -73,20 +73,32 @@ Pronto! Agora basta seguir as instruções da tela para gerenciar seus projetos.
 
 ### Versão
 
-Verifique a versão do sistema em [VERSION](version-app.js)
+Verifique o histórico de versão do sistema em [version-app](version-app.js)
 
-### License
+### Licença
 
-Este projeto está licensiado através da GNU - GENERAL PUBLIC LICENSE [LICENSE](LICENSE)
+Este projeto está licensiado através da: 
 
-### Desenvolvedor
+GNU - GENERAL PUBLIC LICENSE 
 
-**Cleiton Cavalcanti dos Santos** 
+[LICENSE](LICENSE)
+
+### Autor / Desenvolvedor
+
+Cleiton Cavalcanti dos Santos - Marido, Pai, Gestor e Full Stack Developer, especializado em Javascript e PHP, tanto Frontend quanto Backend. Especiazado no uso e configuração de banco de dados MySQL, SQL Serve e MongoDB. Com mais de 18 anos de experiencia em desenvolvimento, implatação, migração, manutenção e gerenciamento de software, utilizando as mais variadas linguagens de programação, tais como: C, C++, PHP, Javacript, HTML, CSS, Python, Ruby, Go... Bem como também utilizando os mais diversos framework e api, tais como: React, React Native, Next, Zend, Laravel... E os mais variados bancos de dados, tais como MySQL, SQL Server, MongoDB.
+
+Frase de Inspiração:
+
+_"... As desculpas matam os sonhos! Se não sabe fazer, APRENDE! ..."_
 
 Entre em contato comigo: 
 
-[E-MAIL](mailto:cleiton.rce@gmail.com)
+[E-MAIL](mailto:cleiton.rce@gmail.com) - cleiton.rce@gmail.com
 
 [LINKEDIN](https://www.linkedin.com/in/cleiton-cavalcanti-dos-santos-734500123/)
 
-Veja outros projetos de minha autoria em [PROJECTS](https://github.com/rcbus)
+Veja outros projetos de minha autoria em [RCBUS](https://github.com/rcbus)
+
+### Sobre a RCBUS
+
+Ramalho Cavalcanti Business - Empresa fundada por Cleiton Cavalcanti com o foco no desenvolvimento de software usando as mais modernas tecnologias do mercado.
