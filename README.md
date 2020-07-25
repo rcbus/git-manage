@@ -85,25 +85,27 @@ GNU - GENERAL PUBLIC LICENSE
 
 ### Autor / Desenvolvedor
 
-Cleiton Cavalcanti dos Santos - Marido, Pai, Gestor e Full Stack Developer, especializado em Javascript e PHP, tanto Frontend quanto Backend. Especiazado no uso e configuração de banco de dados MySQL, SQL Serve e MongoDB. Com mais de 18 anos de experiencia em desenvolvimento, implatação, migração, manutenção e gerenciamento de software, utilizando as mais variadas linguagens de programação, tais como: C, C++, C#, PHP, Javacript, HTML, CSS, Python, Ruby, Go... Bem como também utilizando os mais diversos framework e api, tais como: React, React Native, Next, Zend, Laravel... E os mais variados bancos de dados, tais como MySQL, SQL Server, MongoDB.
+Cleiton Cavalcanti dos Santos - Marido, Pai, Gestor e Full Stack Developer, especializado em Javascript e PHP, tanto Frontend quanto Backend. Especiazado no uso e configuração de banco de dados MySQL, SQL Server e MongoDB. Com mais de 18 anos de experiencia em desenvolvimento, implatação, migração, manutenção e gerenciamento de software, utilizando as mais variadas linguagens de programação, tais como: C, C++, C#, PHP, Javacript, HTML, CSS, Python, Ruby, Go... Bem como também utilizando os mais diversos framework's e api's, tais como: React, React Native, Next, Zend, Laravel... E os mais variados bancos de dados, tais como MySQL, SQL Server, MongoDB.
 
-<br/><br/>
+<br/>
 
 #### Frase de Inspiração:
 
-_"... As desculpas matam os sonhos! Se não sabe fazer, APRENDE! ..."_
+_"... As desculpas matam os sonhos!_
 
-<br/><br/>
+_Se não sabe fazer, APRENDE! ..."_
+
+<br/>
 
 #### Entre em contato comigo: 
 
-[E-MAIL](mailto:cleiton.rce@gmail.com) - cleiton.rce@gmail.com
+cleiton.rce@gmail.com
 
 [LINKEDIN](https://www.linkedin.com/in/cleiton-cavalcanti-dos-santos-734500123/)
 
 Veja outros projetos de minha autoria em [RCBUS](https://github.com/rcbus)
 
-<br/><br/>
+<br/>
 
 ### Sobre a RCBUS
 
