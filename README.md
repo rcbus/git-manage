@@ -1,3 +1,5 @@
+<div align="justify">
+
 # Git Manage
 
 Sistema em node.js que simplifica a gestão do git local e do git remoto (github), usando um padrão de registro de branch da RCBUS.
@@ -131,6 +133,8 @@ HISTÓRIO DE VERSÕES
 
 - Dica extra: Evite ter mais de um desenvolvedor mexendo em um mesmo arquivo, divida a equipe de modo a cada um ser "dono" de uma parte do projeto e consequente de um grupo de arquivos, assim evita-se os conflitos de pull request e merge, e principalmente evita-se o conflito de merge local, ocasionado quando por exemplo eu retive as alterações de um arquivo, por exemplo, porque não conclui o desenvolvimento e não deve subir para produção ainda, e outro desenvolvedor fez uma alteração que subiu, dai quando eu for fazer o git pull origin master (no nosso caso o pull completo pelo sistema), vai dar erro e vai dar um certo trabalho para corrigir isso e evitar que as alterações sejam perdidas. Caso haja realmente a necessidade de mais de um desenvolvedor mexer em um mesmo arquivo, é melhor coloca-los para trabalharem juntos nessa parte do sistema, assim eles decidem juntos o que será mudado, quando e porque. 
 
+- Caso tenha que fazer alguma pequena alteração no projeto que não há necessidade de troca de versão, basta não realizar o pull completo ou faze-lo sem criar uma nova branch, assim o sistema entende que você deseja manter a mesma versão.
+
 - Caso o seu projeto não tenha um arquivo version-app.js ou caso não tenha o formato acima, o sistema irá avisar na tela mas não irá impedir o push ou pull.
 
 ### Versão
@@ -172,3 +176,5 @@ Veja outros projetos de minha autoria em [RCBUS](https://github.com/rcbus)
 ### Sobre a RCBUS
 
 Ramalho Cavalcanti Business - Empresa fundada por Cleiton Cavalcanti com o foco no desenvolvimento de software usando as mais modernas tecnologias do mercado.
+
+</div>
