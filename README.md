@@ -75,7 +75,7 @@ Pronto! Agora basta seguir as instruções da tela para gerenciar seus projetos.
 
 - Use o sistema com o terminal maximizado ou em tela cheia para uma melhor experiencia de uso.
 
-- O sistema tem como objetivo principal padronizar a forma como você registra as versões dos seus projetos. Portanto a cada pull completo do seu projeto, o sistema vai perguntar se você deseja criar nova branch (ramo/versão) e ao optar por sim o sistema irá criar uma nova branch com um nome seguindo o esse formato: 
+- O sistema tem como objetivo principal padronizar a forma como você registra as versões dos seus projetos. Portanto a cada pull completo (opção 4 do sistema) do seu projeto, o sistema vai perguntar se você deseja criar nova branch (ramo/versão) e ao optar por sim o sistema irá criar uma nova branch com um nome seguindo o esse formato: 
 
 update_username_YYYYMMDD_HHIISS 
 
@@ -102,7 +102,7 @@ HISTÓRIO DE VERSÕES
 
 - Perceba que a variavel version vem antes do histórico, isso é importante. Perceba também que o "HISTÓRIO DE VERSÕES" está dentro de um comentário "/* ... */", isso também é importante. O arquivo precisa ter pelo menos essas 2 informações para que o sistema entenda e comece a contabilizar as versões de forma automática. Caso queira criar alguma função para usar essa versão no seu projeto para apresentar na tela por exemplo, você pode fazer como quiser, se precisar de exemplo de uso veja o nosso próprio arquivo de versão [version-app](version-app.js). 
 
-- Após criar o arquivo, sempre que executar o pull usando o nosso sistema, ele irá incrementar o número da versão automaticamente. Como o exemplo abaixo:
+- Após criar o arquivo, sempre que executar o pull usando o nosso sistema (opção 4 do sistema), ele irá incrementar o número da versão automaticamente. Como o exemplo abaixo:
 
 
 ```
@@ -125,7 +125,7 @@ HISTÓRIO DE VERSÕES
 
 - Note o seguinte, a data do histórico da versão nem sempre é a mesma data da branch, isso porque o que queremos sugerir com esse sistema é que você saiba a partir de que data uma nossa alteração foi iniciada (nesse caso a data da criação da nova branch ao executar o pull completo), e a data exata que branch subiu para o github com um novo número de versão (nesse caso a data registrada no histórico de versão). 
 
-- Você deve estar se perguntando, mas e se eu não trabalho sozinho, tenho outros contribuidores do projeto, as versões não irão conflitar? Sim, irão, mas todo projeto construído com mais de um desenvolvedor precisa ter um coordenador, que será o responsável por fazer o merge das versões, e ele decidirá qual versão será adotada. Dica importante: Se você tem uma equipe de desenvolvedores, defina um dia da semana, do mês ou qualquer data que seja para que todos os desenvolvedores realizem o push completo de suas branch, é importante que todos façam isso no mesmo dia, e não realizem mais alterações até que o merge seja feito. Após o merge ser executado, todos devem executar o pull completo, assim todos estarão trabalhando com a versão mais rescente do sistema sempre. Um bom dia para isso é na sexta-feira no final do expediente, assim o coordenador do projeto terá o final de semana para realizar o merge, e na segunda-feira de manhã todos podem realizar o pull completo e continuar com o desenvolvimento.
+- Você deve estar se perguntando, mas e se eu não trabalho sozinho, tenho outros contribuidores do projeto, as versões não irão conflitar? Sim, irão, mas todo projeto construído com mais de um desenvolvedor precisa ter um coordenador, que será o responsável por fazer o merge das versões, e ele decidirá qual versão será adotada. Dica importante: Se você tem uma equipe de desenvolvedores, defina um dia da semana, do mês ou qualquer data que seja para que todos os desenvolvedores realizem o push completo (opção 3 do sistema) de suas branch, é importante que todos façam isso no mesmo dia, e não realizem mais alterações até que o merge seja feito. Após o merge ser executado, todos devem executar o pull completo, assim todos estarão trabalhando com a versão mais rescente do sistema sempre. Um bom dia para isso é na sexta-feira no final do expediente, assim o coordenador do projeto terá o final de semana para realizar o merge, e na segunda-feira de manhã todos podem realizar o pull completo e continuar com o desenvolvimento.
 
 - Dica extra: Evite ter mais de um desenvolvedor mexendo em um mesmo arquivo, divida a equipe de modo a cada um ser "dono" de uma parte do projeto e consequente de um grupo de arquivos, assim evita-se os conflitos de pull request e merge, e principalmente evita-se o conflito de merge local, ocasionado quando por exemplo eu retive as alterações de um arquivo, por exemplo, porque não conclui o desenvolvimento e não deve subir para produção ainda, e outro desenvolvedor fez uma alteração que subiu, dai quando eu for fazer o git pull origin master (no nosso caso o pull completo pelo sistema), vai dar erro e vai dar um certo trabalho para corrigir isso e evitar que as alterações sejam perdidas. Caso haja realmente a necessidade de mais de um desenvolvedor mexer em um mesmo arquivo, é melhor coloca-los para trabalharem juntos nessa parte do sistema, assim eles decidem juntos o que será o mudado, quando e porque. 
 
