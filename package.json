@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "line-reader": "^0.4.0",
     "mkdirp": "^1.0.4",
     "shelljs": "^0.8.4"
   }
