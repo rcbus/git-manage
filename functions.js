@@ -9,9 +9,9 @@ module.exports = {
         }else if(s.which('clean')){
             s.exec('clean')
         }else if(s.which('cls')){
-            s.exec('cls')
+            for (var i = 0; i < 50; i++) console.log('')
         }else{
-            s.exec('cls')
+            for (var i = 0; i < 50; i++) console.log('')
         }
     },
 
