@@ -172,6 +172,15 @@ module.exports = {
         })
     },
 
+    ///// STRLEN - CONTA O TAMANHO DE STRING DE FORMA SEGURA /////
+    strlen(string){
+        if(typeof string === 'undefined'){
+            return 0
+        }else{
+            return string.toString().length
+        }
+    },
+
     ///// STRLOWER - TRANSFORMA A STRING EM MINUSCULA /////
     strlower(string){
         if(typeof string === 'undefined'){
