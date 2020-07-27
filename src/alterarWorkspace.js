@@ -26,6 +26,13 @@ module.exports = {
                 const menu = require('./menu')
                 menu.exec()
             }else{
+                var pos = answer.lastIndexOf('/')
+                if(pos==-1 || pos!=(f.strlen(answer)-1)){
+                    answer = answer + '/'
+                }
+                if(answer.indexOf('\\')!=-1){
+                    answer = answer.replace(/\\/g, '/')
+                }
                 content = 'WORKSPACE_PATH=' + answer + '\n'
                 f.question(['Informe o seu nome:','<br>','0 - VOLTAR'],(answer) => {
                     if(answer=='0'){

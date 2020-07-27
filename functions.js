@@ -4,12 +4,12 @@ module.exports = {
     
     ///// CLEAR - LIMPA TELA DO TERMINAL /////
     clear(){
-        if(s.which('clear')){
+        if(s.which('cls')){
+            s.exec('cls')
+        }else if(s.which('clear')){
             s.exec('clear')
         }else if(s.which('clean')){
             s.exec('clean')
-        }else if(s.which('cls')){
-            s.exec('cls')
         }
     },
 

@@ -8,11 +8,12 @@ module.exports = {
 }
 
 const appName = 'RCBUS GIT MANAGE'
-const version = '1.0.6'
+const version = '1.0.7'
 
 /*
 HISTORICO
 
+27/07/2020 AS 11:23:51 - 1.0.7 - BRANCH: update_cleiton_20200727_005551
 27/07/2020 AS 00:52:33 - 1.0.6 - BRANCH: update_cleiton_20200727_005224
 27/07/2020 AS 00:28:38 - 1.0.5 - BRANCH: update_cleiton_20200727_002652
 27/07/2020 AS 00:24:22 - 1.0.4 - BRANCH: update_cleiton_20200726_233430
