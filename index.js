@@ -15,6 +15,13 @@ fs.access('./.env', fs.constants.F_OK, (error) => {
     if(error){
         var content = ''
         f.question(['Informe o caminho do seu workspace','(Ex.: /home/user/documents/www/):'],(answer) => {
+            var pos = answer.lastIndexOf('/')
+            if(pos==-1 || pos!=(f.strlen(answer)-1)){
+                answer = answer + '/'
+            }
+            if(answer.indexOf('\\')!=-1){
+                answer = answer.replace(/\\/g, '/')
+            }
             content = 'WORKSPACE_PATH=' + answer + '\n'
             f.question(['Informe o seu nome:'],(answer) => {
                 content = content + 'USER_NAME=' + f.strlower(f.clearString(answer,true,true)) + '\n'
