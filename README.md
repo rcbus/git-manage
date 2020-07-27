@@ -6,9 +6,9 @@ Sistema em node.js que simplifica a gestão do git local e do git remoto (github
 
 ## Sobre o Projeto
 
-Esse projeto nasceu para simplificar, padronizar e otimizar o tempo de gestão do git hub. Trata-se de uma aplicação muito simples, que roda em node.js no terminal mesmo e basicamente ela te ajuda a gerenciar os seus projetos e fazer o git pull e push de uma forma padronizada e organizada. É importante frisar que existem muitas aplicações que facilitam muito o uso do git e do github, com interfaces gráficas e tudo mais, inclusive o próprio VS CODE possui extensões para isso, mas se você seguir com a instalação e/ou leitura do tópico "Recomendações e Observações" mais abaixo verá que a ideiar não é reinventar a roda do git e do github e sim ajudar a organizar o controle de versão do seu projeto de uma forma eficiente.
+Esse projeto nasceu para simplificar, padronizar e otimizar o tempo de gestão do git hub. Trata-se de uma aplicação muito simples, que roda em node.js no terminal mesmo e basicamente ela te ajuda a gerenciar os seus projetos e fazer o git pull e push de uma forma padronizada e organizada. É importante frisar que existem muitas aplicações que facilitam muito o uso do git e do github, com interfaces gráficas e tudo mais, inclusive o próprio VS CODE possui extensões para isso, mas se você seguir com a instalação e/ou leitura do tópico "Recomendações e Observações" mais abaixo verá que a ideia não é reinventar a roda do git e do github e sim ajudar a organizar o controle de versão do seu projeto de uma forma eficiente.
 
-### Pre-Requesitos
+### Pré-Requesitos
 
 Para rodar o sistema você vai precisar ter o npm e o node instalados:
 
