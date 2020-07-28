@@ -35,9 +35,22 @@ module.exports = {
                 'ESCOLHA UM PROJETO ACIMA OU UMA OPÇÃO ABAIXO:',
                 '<br>',
                 '0 - VOLTAR',
+                'U - ATUALIZAR OS SUBMODULOS COMPONENTS E',
+                '    LIBS DE TODOS OS PROJETOS',
                 '<br>'
             ],(answer) => {
-                this.select(answer,returnLs)
+                if(f.strlower(answer)=='u'){
+                    Object.keys(returnLs).map(k => {
+                        this.updateSubModuleComponents(returnLs[k],true)
+                        if(k<(f.count(returnLs)-1)){
+                            this.updateSubModuleComponents(returnLs[k],true)
+                        }else{
+                            this.updateSubModuleComponents(returnLs[k],true,true)
+                        }
+                    })
+                }else{
+                    this.select(answer,returnLs)
+                }
             })
         }else{
             this.select('',returnLs,projeto)
@@ -430,6 +443,7 @@ module.exports = {
                 '3 - EXECUTAR PUSH (ENVIO PARA GITHUB) COMPLETO',
                 '4 - EXECUTAR PULL (BAIXAR DO GITHUB) COMPLETO',
                 '5 - ABRIR PROJETO NO VSCODE',
+                '6 - ATUALIZAR SUBMODULO COMPONENTS E LIBS',
                 '<br>'
             ],(answer) => {
                 if(answer=='1'){
@@ -445,6 +459,8 @@ module.exports = {
                     s.exec('code .')
                     const projetos = require('./projetos')
                     projetos.exec(projetoSelected)
+                }else if(answer=='6'){
+                    this.updateSubModuleComponents(projetoSelected)
                 }else{
                     const projetos = require('./projetos')
                     projetos.exec()
@@ -478,5 +494,112 @@ module.exports = {
                 projetos.exec(projetoSelected)
             })
         }
+    },
+
+    ///// UPDATESUBMODULECOMPONENTS - ATUALIZA OS SUBMÓDULOS COMPONENTS /////
+    updateSubModuleComponents(projetoSelected,allProjects,endPoint){
+        if(allProjects === undefined){
+            this.head(projetoSelected)
+        }
+        fs.access(process.env.WORKSPACE_PATH + projetoSelected + '/components/', fs.constants.F_OK, (error) => {
+            if(error){
+                f.banner(['PROJETO: ' + projetoSelected,'ESSE PROJETO NÃO POSSUI O SUBMODULO COMPONENTS!'],'left',false,true,true)
+                this.updateSubModuleLibs(projetoSelected,allProjects,endPoint)
+            }else{
+                s.cd(process.env.WORKSPACE_PATH + projetoSelected + '/components/')
+                if(s.exec('git pull origin master').code !== 0) {
+                    f.banner(['PROJETO: ' + projetoSelected,'HOUVE UMA FALHA AO TENTAR ATUALIZAR O SUBMODULO COMPONENTS!'],'left',false,true,true)
+                    this.updateSubModuleLibs(projetoSelected,allProjects,endPoint)
+                }else{
+                    f.banner(['PROJETO: ' + projetoSelected,'SUBMODULO COMPONENTS ATUALIZADO COM SUCESSO!'],'left',false,true,true)
+                    this.updateSubModuleLibs(projetoSelected,allProjects,endPoint)
+                }
+            }
+        })
+    },
+
+    ///// UPDATESUBMODULELIBS - ATUALIZA OS SUBMÓDULOS LIBS /////
+    updateSubModuleLibs(projetoSelected,allProjects,endPoint){
+        fs.access(process.env.WORKSPACE_PATH + projetoSelected + '/libs/', fs.constants.F_OK, (error) => {
+            if(error){
+                f.banner(['PROJETO: ' + projetoSelected,'ESSE PROJETO NÃO POSSUI O SUBMODULO LIBS!'],'left',false,true,true)
+                if(allProjects === undefined){
+                    f.question([
+                        '<br>',
+                        'ESCOLHA UMA OPÇÃO:',
+                        '<br>',
+                        '0 - VOLTAR',
+                        '<br>'
+                    ],(answer) => {
+                        const projetos = require('./projetos')
+                        projetos.exec(projetoSelected)
+                    })
+                }else if(endPoint !== undefined){
+                    f.question([
+                        '<br>',
+                        'ESCOLHA UMA OPÇÃO ABAIXO:',
+                        '<br>',
+                        '0 - VOLTAR',
+                        '<br>'
+                    ],(answer) => {
+                        const projetos = require('./projetos')
+                        projetos.exec()
+                    })
+                }
+            }else{
+                s.cd(process.env.WORKSPACE_PATH + projetoSelected + '/libs/')
+                if(s.exec('git pull origin master').code !== 0) {
+                    f.banner(['HOUVE UMA FALHA AO TENTAR ATUALIZAR O SUBMODULO LIBS!'],'left',false,true,true)
+                    if(allProjects === undefined){
+                        f.question([
+                            '<br>',
+                            'ESCOLHA UMA OPÇÃO:',
+                            '<br>',
+                            '0 - VOLTAR',
+                            '<br>'
+                        ],(answer) => {
+                            const projetos = require('./projetos')
+                            projetos.exec(projetoSelected)
+                        })
+                    }else if(endPoint !== undefined){
+                        f.question([
+                            '<br>',
+                            'ESCOLHA UMA OPÇÃO ABAIXO:',
+                            '<br>',
+                            '0 - VOLTAR',
+                            '<br>'
+                        ],(answer) => {
+                            const projetos = require('./projetos')
+                            projetos.exec()
+                        })
+                    }
+                }else{
+                    f.banner(['PROJETO: ' + projetoSelected,'SUBMODULO LIBS ATUALIZADO COM SUCESSO!'],'left',false,true,true)
+                    if(allProjects === undefined){
+                        f.question([
+                            '<br>',
+                            'ESCOLHA UMA OPÇÃO:',
+                            '<br>',
+                            '0 - VOLTAR',
+                            '<br>'
+                        ],(answer) => {
+                            const projetos = require('./projetos')
+                            projetos.exec(projetoSelected)
+                        })
+                    }else if(endPoint !== undefined){
+                        f.question([
+                            '<br>',
+                            'ESCOLHA UMA OPÇÃO ABAIXO:',
+                            '<br>',
+                            '0 - VOLTAR',
+                            '<br>'
+                        ],(answer) => {
+                            const projetos = require('./projetos')
+                            projetos.exec()
+                        })
+                    }
+                }                
+            }
+        })
     },
 }
