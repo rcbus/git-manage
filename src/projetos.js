@@ -241,7 +241,52 @@ module.exports = {
         })
     },
 
-    ///// PULLFULL - EXECUTA O PULL COMPLETO (BRANCH,CHECKOUT,PULL)
+    ///// NPMINSTALL - EXECUTA A INSTALAÇÃO DO PROJETO /////
+    npmInstall(projetoSelected){
+        this.head(projetoSelected)
+        const pathProject = process.env.WORKSPACE_PATH + projetoSelected + '/'
+        s.cd(pathProject)
+        fs.access(pathProject + '.next', fs.constants.F_OK, (error) => {
+            if(!error){
+                f.banner('APAGANDO A PASTA .NEXT...','left',false,true,true)
+                s.rm('-rf', pathProject + '.next');
+            }
+            fs.access(pathProject + 'node_modules', fs.constants.F_OK, (error) => {
+                if(!error){
+                    f.banner('APAGANDO A PASTA NODE_MODULES...','left',false,true,false)
+                    s.rm('-rf', pathProject + 'node_modules');
+                }
+                fs.access(pathProject + 'package-lock.json', fs.constants.F_OK, (error) => {
+                    if(!error){
+                        f.banner('APAGANDO O ARQUIVO PACKAGE-LOCK.JSON...','left',false,true,false)
+                        s.rm('-rf', pathProject + 'package-lock.json');
+                    }
+                    f.banner('INSTALANDO O PROJETO ' + projetoSelected + '...','left',false,true,false)
+                    if(s.exec('npm install').code !== 0) {
+                        f.question([
+                            'HOUVE UMA FALHA AO TENTAR INSTALAR O PROJETO!',
+                            '<br>',
+                            '0 - VOLTAR'
+                        ],(answer) => {
+                            const projetos = require('./projetos')
+                            projetos.exec(projetoSelected)
+                        })
+                    }else{
+                        f.question([
+                            'PROJETO INSTALADO COM SUCESSO!',
+                            '<br>',
+                            '0 - VOLTAR'
+                        ],(answer) => {
+                            const projetos = require('./projetos')
+                            projetos.exec(projetoSelected)
+                        })
+                    }
+                })
+            })
+        })
+    },
+
+    ///// PULLFULL - EXECUTA O PULL COMPLETO (BRANCH,CHECKOUT,PULL) /////
     pullFull(projetoSelected){
         this.head(projetoSelected)
         s.cd(process.env.WORKSPACE_PATH + projetoSelected)
@@ -444,6 +489,8 @@ module.exports = {
                 '4 - EXECUTAR PULL (BAIXAR DO GITHUB) COMPLETO',
                 '5 - ABRIR PROJETO NO VSCODE',
                 '6 - ATUALIZAR SUBMODULO COMPONENTS E LIBS',
+                '7 - INSTALAR PROJETO (NPM INSTALL)',
+                '8 - EXECUTAR O PROJETO (NPM RUN DEV)',
                 '<br>'
             ],(answer) => {
                 if(answer=='1'){
@@ -461,6 +508,13 @@ module.exports = {
                     projetos.exec(projetoSelected)
                 }else if(answer=='6'){
                     this.updateSubModuleComponents(projetoSelected)
+                }else if(answer=='7'){
+                    this.npmInstall(projetoSelected)
+                }else if(answer=='8'){
+                    s.cd(process.env.WORKSPACE_PATH + projetoSelected)
+                    s.exec('npm run dev')
+                    const projetos = require('./projetos')
+                    projetos.exec(projetoSelected)
                 }else{
                     const projetos = require('./projetos')
                     projetos.exec()
