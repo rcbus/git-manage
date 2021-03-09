@@ -40,13 +40,21 @@ module.exports = {
                         menu.exec()
                     }else{
                         content = content + 'USER_NAME=' + f.strlower(f.clearString(answer,true,true)) + '\n'
-                        const data = new Uint8Array(Buffer.from(content));
-                        fs.writeFile('./.env', data, (error) => {
-                            if(error){
-                                f.banner('Houve uma falha: ' + error + '!')
+                        f.question(['Informe a tecnologia:','<br>','0 - VOLTAR'],(answer) => {
+                            if(answer=='0'){
+                                const menu = require('./menu')
+                                menu.exec()
                             }else{
-                                f.banner(['Workspace salvo com sucesso!','Execute "node index" novamente.'])
-                                s.exit(1)
+                                content = content + 'TECH=' + f.strlower(f.clearString(answer,true,true)) + '\n'
+                                const data = new Uint8Array(Buffer.from(content));
+                                fs.writeFile('./.env', data, (error) => {
+                                    if(error){
+                                        f.banner('Houve uma falha: ' + error + '!')
+                                    }else{
+                                        f.banner(['Workspace salvo com sucesso!','Execute "node index" novamente.'])
+                                        s.exit(1)
+                                    }
+                                });
                             }
                         });
                     }
