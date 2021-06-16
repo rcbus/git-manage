@@ -185,7 +185,7 @@ module.exports = {
     },
 
     ///// GIT ADD SPECIFIC
-    gitAddSpecific(specific){
+    gitAddSpecific(specific,callback){
         s.exec('git status',function(error,stdout,stderr){
             var newStdout = stdout.split('\n')
             var count = 1;
@@ -195,7 +195,6 @@ module.exports = {
                 if(typeof status === 'string'){
                     if(status.indexOf('modified')!=-1){
                         status = status.replace(/\s/g, '')
-                        status = status.replace('modified:', '')
 
                         var verified = false
                         memory.map(m => {
@@ -206,8 +205,10 @@ module.exports = {
                         
                         if(verified===false){
                             memory.push(status)
-                            specific.map(value => {
-                                if(value==(count + '')){
+
+                            status = status.replace('modified:', '')
+                            specific.map(specificTemp => {
+                                if(specificTemp==(count + '')){
                                     if(s.exec('git add ' + status).code !== 0){
                                         console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
                                         console.log('git add ' + status)            
@@ -221,7 +222,7 @@ module.exports = {
                 }
             })
             console.log('\n')
-            return true
+            callback()
         })
     },
 

@@ -394,16 +394,6 @@ module.exports = {
     pushFull(projetoSelected){
         this.head(projetoSelected)
         s.cd(process.env.WORKSPACE_PATH + projetoSelected)
-        /*if(f.gitStatus() !== 0) {
-            f.question([
-                'HOUVE UMA FALHA AO TENTAR VERIFICAR O STATUS!',
-                '<br>',
-                '0 - VOLTAR'
-            ],(answer) => {
-                const projetos = require('./projetos')
-                projetos.exec(projetoSelected)
-            })
-        }else{*/
         f.gitStatus(
             f.question([
                 '<br>',
