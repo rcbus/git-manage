@@ -178,7 +178,7 @@ module.exports = {
                     }else if(line.indexOf('"')!=-1){
                         quotation = '"'
                     }
-                    if(f.strlen(quotation)==0){ 
+                    if(f.strlen(quotation)==0){
                         f.banner(['Formato da versão inválido!(1)'],'left',false,true,true)
                     }else{
                         var posA = line.indexOf(quotation)
