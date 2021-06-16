@@ -150,6 +150,81 @@ module.exports = {
         return newReturnLs
     },
 
+    ///// GIT STATUS MODIFIED
+    gitStatus(){
+        s.exec('git status',function(error,stdout,stderr){
+            var newStdout = stdout.split('\n')
+            var count = 1;
+            var memory = [];
+            console.log('\n')
+            newStdout.map(status => {
+                if(typeof status === 'string'){
+                    if(status.indexOf('modified')!=-1){
+                        status = status.replace(/\s/g, '')
+                        
+                        var verified = false
+                        memory.map(m => {
+                            if(m==status){
+                                verified = true
+                            }
+                        })
+                        
+                        if(verified===false){
+                            memory.push(status)
+
+                            status = status.replace('modified:', count + ': ')
+                            console.log(status)
+                            count++
+                        }
+                    }
+                }
+            })
+            console.log('\n')
+
+        })
+    },
+
+    ///// GIT ADD SPECIFIC
+    gitAddSpecific(specific){
+        s.exec('git status',function(error,stdout,stderr){
+            var newStdout = stdout.split('\n')
+            var count = 1;
+            var memory = [];
+            console.log('\n')
+            newStdout.map(status => {
+                if(typeof status === 'string'){
+                    if(status.indexOf('modified')!=-1){
+                        status = status.replace(/\s/g, '')
+                        status = status.replace('modified:', '')
+
+                        var verified = false
+                        memory.map(m => {
+                            if(m==status){
+                                verified = true
+                            }
+                        })
+                        
+                        if(verified===false){
+                            memory.push(status)
+                            specific.map(value => {
+                                if(value==(count + '')){
+                                    if(s.exec('git add ' + status).code !== 0){
+                                        console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
+                                        console.log('git add ' + status)            
+                                    }
+                                }
+                            })
+                            console.log(status)
+                            count++
+                        }
+                    }
+                }
+            })
+            console.log('\n')
+            return true
+        })
+    },
+
     ///// QUESTION - ESCREVE UMA PERGUNTA NA TELA E AGUARDA UMA RESPOSTA DO USUARIO /////
     question(question,callbackAnswer,noBr,brBottom,brTop){
         this.banner(question,'left',false,brBottom,brTop)

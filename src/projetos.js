@@ -152,96 +152,104 @@ module.exports = {
         var oldVersion = ''
         var newVersion = ''
         var save = false
+        var extension = 'php'
 
         s.cd(process.env.WORKSPACE_PATH + projetoSelected)
-        lineReader.eachLine('version-app.' + process.env.TECH, (line, last) => {
-            if(gateHistoric===true && f.strlen(newVersion)>=5 && f.strlen(newVersion)<=11 && f.strlen(line)>0 && save===false){
-                gateHistoric = false
-                save = true
 
-                const now = new Date()
-                var newHistoric = f.zeroLeft(now.getDate(),2) + '/' + f.zeroLeft(now.getMonth()+1,2) + '/' + now.getFullYear() + ' AS ' + f.zeroLeft(now.getHours(),2) + ':' + f.zeroLeft(now.getMinutes(),2) + ':' + f.zeroLeft(now.getSeconds(),2) + ' - ' + newVersion + ' - BRANCH: ' + branch
+        fs.access('version-app.' + extension, fs.constants.R_OK, (err) => {
+            if(err){
+                extension = 'js'
+            }
 
-                newFileVersion.push(newHistoric)
-                newFileVersion.push(line)
-            }else if(line.indexOf('const version')!=-1 || line.indexOf('$_VERSION')!=-1){
-                var quotation = ''
-                if(line.indexOf('\'')!=-1){
-                    quotation = '\''
-                }else if(line.indexOf('"')!=-1){
-                    quotation = '"'
-                }
-                if(f.strlen(quotation)==0){
-                    f.banner(['Formato da versão inválido!(1)'],'left',false,true,true)
-                }else{
-                    var posA = line.indexOf(quotation)
-                    var subString = line.substring(posA + 1)
-                    var posB = subString.indexOf(quotation)
-                    var versionString = subString.substring(0,posB)
-                    if(f.strlen(versionString)<5 || f.strlen(versionString)>11){
-                        f.banner(['Formato da versão inválido!(2)'],'left',false,true,true)
+            lineReader.eachLine('version-app.' + extension, (line, last) => {
+                if(gateHistoric===true && f.strlen(newVersion)>=5 && f.strlen(newVersion)<=11 && f.strlen(line)>0 && save===false){
+                    gateHistoric = false
+                    save = true
+
+                    const now = new Date()
+                    var newHistoric = f.zeroLeft(now.getDate(),2) + '/' + f.zeroLeft(now.getMonth()+1,2) + '/' + now.getFullYear() + ' AS ' + f.zeroLeft(now.getHours(),2) + ':' + f.zeroLeft(now.getMinutes(),2) + ':' + f.zeroLeft(now.getSeconds(),2) + ' - ' + newVersion + ' - BRANCH: ' + branch
+
+                    newFileVersion.push(newHistoric)
+                    newFileVersion.push(line)
+                }else if(line.indexOf('const version')!=-1 || line.indexOf('$_VERSION')!=-1){
+                    var quotation = ''
+                    if(line.indexOf('\'')!=-1){
+                        quotation = '\''
+                    }else if(line.indexOf('"')!=-1){
+                        quotation = '"'
+                    }
+                    if(f.strlen(quotation)==0){ 
+                        f.banner(['Formato da versão inválido!(1)'],'left',false,true,true)
                     }else{
-                        var version = versionString.split('.')
-                        if(f.count(version)!=3){
-                            f.banner(['Formato da versão inválido!(3)'],'left',false,true,true)
+                        var posA = line.indexOf(quotation)
+                        var subString = line.substring(posA + 1)
+                        var posB = subString.indexOf(quotation)
+                        var versionString = subString.substring(0,posB)
+                        if(f.strlen(versionString)<5 || f.strlen(versionString)>11){
+                            f.banner(['Formato da versão inválido!(2)'],'left',false,true,true)
                         }else{
-                            oldVersion = versionString
-                            Object.keys(version).map(k => {
-                                version[k] = version[k] * 1
-                            })
-                            if(version[2]==9){
-                                version[2] = 0
-                                if(version[1]==9){
-                                    version[1] = 0
-                                    version[0] = version[0] + 1
-                                }else{
-                                    version[1] = version[1] + 1
-                                }
+                            var version = versionString.split('.')
+                            if(f.count(version)!=3){
+                                f.banner(['Formato da versão inválido!(3)'],'left',false,true,true)
                             }else{
-                                version[2] = version[2] + 1
-                            }
-                            newVersion = version[0] + '.' + version[1] + '.' + version[2]
-                            if(line.indexOf('const version')!=-1){
-                                newFileVersion.push('const version = \'' + newVersion + '\'')
-                            }else if(line.indexOf('$_VERSION')!=-1){
-                                newFileVersion.push('$_VERSION = \'' + newVersion + '\';')
+                                oldVersion = versionString
+                                Object.keys(version).map(k => {
+                                    version[k] = version[k] * 1
+                                })
+                                if(version[2]==9){
+                                    version[2] = 0
+                                    if(version[1]==9){
+                                        version[1] = 0
+                                        version[0] = version[0] + 1
+                                    }else{
+                                        version[1] = version[1] + 1
+                                    }
+                                }else{
+                                    version[2] = version[2] + 1
+                                }
+                                newVersion = version[0] + '.' + version[1] + '.' + version[2]
+                                if(line.indexOf('const version')!=-1){
+                                    newFileVersion.push('const version = \'' + newVersion + '\'')
+                                }else if(line.indexOf('$_VERSION')!=-1){
+                                    newFileVersion.push('$_VERSION = \'' + newVersion + '\';')
+                                }
                             }
                         }
+                        
                     }
-                    
+                }else if(line.toLowerCase().indexOf('hist')!=-1){
+                    newFileVersion.push(line)
+                    gateHistoric = true
+                }else{
+                    newFileVersion.push(line)
                 }
-            }else if(line.toLowerCase().indexOf('hist')!=-1){
-                newFileVersion.push(line)
-                gateHistoric = true
-            }else{
-                newFileVersion.push(line)
-            }
-            if(line.indexOf(branch)!=-1){
-                save = 1
-            }
-        },() => {
-            if(save===false){
-                f.banner(['Houve uma falha ao tentar gerar a nova versão!'],'left',false,true,true)
-                callback()
-            }else if(save==1 && save!==true){
-                f.banner(['Mantendo a mesma versão ' + oldVersion + ' gerada anteriormente!'],'left',false,true,true)
-                callback()
-            }else{
-                var content = ''
-                newFileVersion.map(line => {
-                    content += line + '\n'
-                })
-                const data = new Uint8Array(Buffer.from(content));
-                fs.writeFile('version-app.' + process.env.TECH, data, (error) => {
-                    if(error){
-                        f.banner(['Houve uma falha: ' + error + '!'],'left',false,true,true)
-                        callback()
-                    }else{
-                        f.banner(['Nova versão ' + newVersion + ' gerada com sucesso!'],'left',false,true,true)
-                        callback()
-                    }
-                });
-            }
+                if(line.indexOf(branch)!=-1){
+                    save = 1
+                }
+            },() => {
+                if(save===false){
+                    f.banner(['Houve uma falha ao tentar gerar a nova versão!'],'left',false,true,true)
+                    callback()
+                }else if(save==1 && save!==true){
+                    f.banner(['Mantendo a mesma versão ' + oldVersion + ' gerada anteriormente!'],'left',false,true,true)
+                    callback()
+                }else{
+                    var content = ''
+                    newFileVersion.map(line => {
+                        content += line + '\n'
+                    })
+                    const data = new Uint8Array(Buffer.from(content));
+                    fs.writeFile('version-app.' + extension, data, (error) => {
+                        if(error){
+                            f.banner(['Houve uma falha: ' + error + '!'],'left',false,true,true)
+                            callback()
+                        }else{
+                            f.banner(['Nova versão ' + newVersion + ' gerada com sucesso!'],'left',false,true,true)
+                            callback()
+                        }
+                    });
+                }
+            })
         })
     },
 
@@ -386,7 +394,7 @@ module.exports = {
     pushFull(projetoSelected){
         this.head(projetoSelected)
         s.cd(process.env.WORKSPACE_PATH + projetoSelected)
-        if(s.exec('git status').code !== 0) {
+        /*if(f.gitStatus() !== 0) {
             f.question([
                 'HOUVE UMA FALHA AO TENTAR VERIFICAR O STATUS!',
                 '<br>',
@@ -395,15 +403,18 @@ module.exports = {
                 const projetos = require('./projetos')
                 projetos.exec(projetoSelected)
             })
-        }else{
+        }else{*/
+        f.gitStatus(
             f.question([
                 '<br>',
-                'PROSSEGUIR COM O "ADD ." ?',
+                'PROSSEGUIR COM O "ADD ." OU',
+                'ADICIONAR ESPECÍFICAMENTE?',
+                '(SEPARE POR VIRGULA)',
                 '<br>',
-                '1 - SIM | 0 - NÃO',
+                'Y - SIM | N - NÃO',
                 '<br>'
             ],(answer) => {
-                if(answer=='1'){
+                if(answer=='y' || answer=='Y'){
                     const branch = this.getBranch(projetoSelected)
                     this.head(projetoSelected)
                     this.newVersion(projetoSelected,branch,() => {
@@ -479,12 +490,81 @@ module.exports = {
                             },false,true,true)
                         }
                     })
-                }else{
+                }else if(answer=='n' || answer=='N'){
                     const projetos = require('./projetos')
                     projetos.exec(projetoSelected)
+                }else{
+                    var specific = answer.split(',')
+
+                    const branch = this.getBranch(projetoSelected)
+                    this.head(projetoSelected)
+                    this.newVersion(projetoSelected,branch,() => {
+                        f.gitAddSpecific(specific,() => {
+                            f.question([
+                                '<br>',
+                                'DESEJA PROSSEGUIR COM O COMMIT?',
+                                'COMMIT: ' + branch,
+                                '<br>',
+                                '1 - SIM | 0 - NÃO',
+                                '<br>'
+                            ],(answer) => {
+                                if(answer=='1'){
+                                    this.head(projetoSelected)
+                                    if(s.exec('git commit -m "' + branch + '"').code !== 0) {
+                                        f.question([
+                                            'HOUVE UMA FALHA AO TENTAR EXECUTAR O COMMIT!',
+                                            '<br>',
+                                            '0 - VOLTAR'
+                                        ],(answer) => {
+                                            const projetos = require('./projetos')
+                                            projetos.exec(projetoSelected)
+                                        })
+                                    }else{
+                                        f.question([
+                                            '<br>',
+                                            'DESEJA PROSSEGUIR COM O PUSH?',
+                                            'PUSH BRANCH: ' + branch,
+                                            '<br>',
+                                            '1 - SIM | 0 - NÃO',
+                                            '<br>'
+                                        ],(answer) => {
+                                            if(answer=='1'){
+                                                this.head(projetoSelected)
+                                                if(s.exec('git push -u origin ' + branch).code !== 0) {
+                                                    f.question([
+                                                        'HOUVE UMA FALHA AO TENTAR EXECUTAR O PUSH!',
+                                                        '<br>',
+                                                        '0 - VOLTAR'
+                                                    ],(answer) => {
+                                                        const projetos = require('./projetos')
+                                                        projetos.exec(projetoSelected)
+                                                    })
+                                                }else{
+                                                    f.question([
+                                                        'PUSH REALIZADO COM SUCESSO!',
+                                                        '<br>',
+                                                        '0 - VOLTAR'
+                                                    ],(answer) => {
+                                                        const projetos = require('./projetos')
+                                                        projetos.exec(projetoSelected)
+                                                    },false,true,true)
+                                                }
+                                            }else{
+                                                const projetos = require('./projetos')
+                                                projetos.exec(projetoSelected)
+                                            }
+                                        },false,true,true)
+                                    }
+                                }else{
+                                    const projetos = require('./projetos')
+                                    projetos.exec(projetoSelected) 
+                                }
+                            },false,true,true)
+                        })
+                    })
                 }
             },false,true,true)
-        }
+        )
     },
 
     ///// SELECT - SELECIONA UM PROJETO /////
