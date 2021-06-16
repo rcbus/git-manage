@@ -215,6 +215,12 @@ module.exports = {
                                     }
                                 }
                             })
+                            if(status.indexOf('version')!=-1){
+                                if(s.exec('git add ' + status).code !== 0){
+                                    console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
+                                    console.log('git add ' + status)            
+                                }
+                            }
                             console.log(status)
                             count++
                         }
