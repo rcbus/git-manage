@@ -159,22 +159,29 @@ module.exports = {
             console.log('\n')
             newStdout.map(status => {
                 if(typeof status === 'string'){
-                    if(status.indexOf('modified')!=-1){
+                    if(status.indexOf('modified')!=-1 || status.indexOf(' ')==-1){
                         status = status.replace(/\s/g, '')
                         
-                        var verified = false
-                        memory.map(m => {
-                            if(m==status){
-                                verified = true
-                            }
-                        })
-                        
-                        if(verified===false){
-                            memory.push(status)
+                        if(status.length>0){
+                            var verified = false
+                            memory.map(m => {
+                                if(m==status){
+                                    verified = true
+                                }
+                            })
+                            
+                            if(verified===false){
+                                memory.push(status)
 
-                            status = status.replace('modified:', count + ': ')
-                            console.log(status)
-                            count++
+                                if(status.indexOf('modified')!=-1){
+                                    status = status.replace('modified:', count + ': ')
+                                }else{
+                                    status = count + ': ' + status
+                                }
+
+                                console.log(status)
+                                count++
+                            }
                         }
                     }
                 }
@@ -193,36 +200,39 @@ module.exports = {
             console.log('\n')
             newStdout.map(status => {
                 if(typeof status === 'string'){
-                    if(status.indexOf('modified')!=-1){
+                    if(status.indexOf('modified')!=-1 || status.indexOf(' ')==-1){
                         status = status.replace(/\s/g, '')
 
-                        var verified = false
-                        memory.map(m => {
-                            if(m==status){
-                                verified = true
-                            }
-                        })
-                        
-                        if(verified===false){
-                            memory.push(status)
+                        if(status.length>0){
+                            var verified = false
+                            memory.map(m => {
+                                if(m==status){
+                                    verified = true
+                                }
+                            })
+                            
+                            if(verified===false){
+                                memory.push(status)
 
-                            status = status.replace('modified:', '')
-                            specific.map(specificTemp => {
-                                if(specificTemp==(count + '')){
+                                status = status.replace('modified:', '')
+                                
+                                specific.map(specificTemp => {
+                                    if(specificTemp==(count + '')){
+                                        if(s.exec('git add ' + status).code !== 0){
+                                            console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
+                                            console.log('git add ' + status)            
+                                        }
+                                    }
+                                })
+                                if(status.indexOf('version')!=-1){
                                     if(s.exec('git add ' + status).code !== 0){
                                         console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
                                         console.log('git add ' + status)            
                                     }
                                 }
-                            })
-                            if(status.indexOf('version')!=-1){
-                                if(s.exec('git add ' + status).code !== 0){
-                                    console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
-                                    console.log('git add ' + status)            
-                                }
+                                console.log(status)
+                                count++
                             }
-                            console.log(status)
-                            count++
                         }
                     }
                 }
