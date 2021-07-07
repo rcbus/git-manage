@@ -200,7 +200,7 @@ module.exports = {
             console.log('\n')
             newStdout.map(status => {
                 if(typeof status === 'string'){
-                    if(status.indexOf('modified')!=-1 || status.indexOf(' ')==-1){
+                    if(status.indexOf('modified')!=-1 || status.indexOf(' ')==-1 || status.indexOf('deleted')!=-1){
                         status = status.replace(/\s/g, '')
 
                         if(status.length>0){
@@ -216,22 +216,30 @@ module.exports = {
 
                                 status = status.replace('modified:', '')
                                 
-                                specific.map(specificTemp => {
-                                    if(specificTemp==(count + '')){
-                                        if(s.exec('git add ' + status).code !== 0){
-                                            console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
-                                            console.log('git add ' + status)            
-                                        }
-                                    }
-                                })
                                 if(status.indexOf('version')!=-1){
                                     if(s.exec('git add ' + status).code !== 0){
-                                        console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
+                                        console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD VERSION!')
                                         console.log('git add ' + status)            
                                     }
+                                }else if(status.indexOf('deleted')!=-1){
+                                    status = status.replace('deleted:', '')
+                                    if(s.exec('git add ' + status).code !== 0){
+                                        console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD DELETED!')
+                                        console.log('git add ' + status)            
+                                    }
+                                }else{
+                                    specific.map(specificTemp => {
+                                        if(specificTemp==(count + '')){
+                                            if(s.exec('git add ' + status).code !== 0){
+                                                console.log('HOUVE UMA FALHA AO TENTAR EXECUTAR O ADD!')
+                                                console.log('git add ' + status)            
+                                            }
+                                        }
+                                    })
+
+                                    console.log(status)
+                                    count++
                                 }
-                                console.log(status)
-                                count++
                             }
                         }
                     }
