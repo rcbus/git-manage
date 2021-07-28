@@ -24,8 +24,12 @@ module.exports = {
 
         const returnLs = f.ls(process.env.WORKSPACE_PATH)
         var newReturnLs = []
+        var count = 0;
         Object.keys(returnLs).map(k => {
-            newReturnLs.push(((k * 1) + 1) + ' - ' + returnLs[k])
+            if(returnLs[k].indexOf('.')==-1){
+                count++;
+                newReturnLs.push(count + ' - ' + returnLs[k])
+            }
         })
         f.banner(newReturnLs)
 
@@ -564,7 +568,15 @@ module.exports = {
             menu.exec()
         }else{
             if(f.count(projetoSelected)==0){
-                projetoSelected = returnLs[((answer * 1) - 1)]
+                var count = 0;
+                Object.keys(returnLs).map(k => {
+                    if(returnLs[k].indexOf('.')==-1){
+                        count++;
+                        if(count==answer){
+                            projetoSelected = returnLs[k]
+                        }
+                    }
+                })
             }
             
             this.head(projetoSelected)
@@ -582,6 +594,7 @@ module.exports = {
                 '6 - ATUALIZAR SUBMODULO COMPONENTS E LIBS',
                 '7 - INSTALAR PROJETO (NPM INSTALL)',
                 '8 - EXECUTAR O PROJETO (NPM RUN DEV)',
+                '9 - ABRIR RCD 7 NO VSCODE',
                 '<br>'
             ],(answer) => {
                 if(answer=='1'){
@@ -604,6 +617,11 @@ module.exports = {
                 }else if(answer=='8'){
                     s.cd(process.env.WORKSPACE_PATH + projetoSelected)
                     s.exec('npm run dev')
+                    const projetos = require('./projetos')
+                    projetos.exec(projetoSelected)
+                }else if(answer=='9'){
+                    s.cd(process.env.WORKSPACE_PATH + 'RCD_7')
+                    s.exec('code .')
                     const projetos = require('./projetos')
                     projetos.exec(projetoSelected)
                 }else{
